@@ -1,89 +1,91 @@
 package br.com.ic2tech.trustterm.model
 
-data class Certificacao(
-    val id: String,
-    val nome: String,
-    val solucao: String,
-    val versaoSW: String,
-    val ciclo: String,
-    val espec: String,
-    val usuario: String,
-    val entidade: String,
-    val statusExecucao: String,
-    var roteiros: MutableList<Roteiro> = mutableListOf(),
-    var tabelas: MutableList<Tabela> = mutableListOf()
+data class CertificationType(
+    val sId: String,
+    val sName: String,
+    val sSolution: String,
+    val sVersion: String,
+    val sCicle: String,
+    val sSpec: String,
+    val sUser: String,
+    val sEntity: String,
+    val sStatus: String,
+    var atGuides: MutableList<GuideType> = mutableListOf(),
+    var atTables: MutableList<TableType> = mutableListOf()
+) {
+    constructor() : this(sId = "", sName = "", sSolution = "", sVersion = "", sCicle = "", sSpec = "", sUser = "", sEntity = "", sStatus = "")
+}
+
+data class GuideType(
+    val sId: String,
+    val sName: String,
+    val sVersion: String,
+    var atGroups: MutableList<GroupType> = mutableListOf()
 )
 
-data class Roteiro(
-    val id: String,
-    val nome: String,
-    val versao: String,
-    var grupos: MutableList<Grupo> = mutableListOf()
+data class TableType(
+    val sId: String,
+    val sName: String,
+    val aAcqIdx: String,
+    val sTableVersion: String,
+    val sVersion: String,
+    var atRegisters: MutableList<RegisterType> = mutableListOf()
 )
 
-data class Tabela(
-    val id: String,
-    val nome: String,
-    val acqIdx: String,
-    val tabVer: String,
-    val versao: String,
-    var registros: MutableList<Registro> = mutableListOf()
+data class GroupType(
+    val sId: String,
+    val sName: String,
+    val sTableName: String,
+    val sTableVersion: String,
+    val atTestCases: MutableList<TestCaseType> = mutableListOf()
 )
 
-data class Grupo(
-    val id: String,
-    val nome: String,
-    val tabelaNome: String,
-    val tabelaVersao: String,
-    val testCases: MutableList<TestCase> = mutableListOf()
-)
-
-data class TestCase(
-    val id: String,
-    val nome: String,
-    val descricao: String,
-    val versao: String,
-    val script: String,
-    val fluxos: MutableList<Fluxo> = mutableListOf(),
-    val comandos: MutableList<Comando> = mutableListOf()
+data class TestCaseType(
+    val sId: String,
+    val sName: String,
+    val sDescription: String,
+    val sVersion: String,
+    val sScript: String,
+    val atFlows: MutableList<FlowType> = mutableListOf(),
+    val atCommands: MutableList<CommandType> = mutableListOf()
 
 )
 
-data class Fluxo(
-    val id: String,
-    val itemId: String,
-    var procedimento: Procedimento,
-    var display: Display,
-    var observacao: Observacao
+data class FlowType(
+    val sId: String,
+    val sItemId: String,
+    var sProcedure: ProcedureType,
+    var sDisplay: DisplayType,
+    var sNote: NoteType
 )
 
-data class Comando(
-    val id: String,
-    val itemId: String,
-    val nome: String,
-    val parametros: MutableList<Parametro> = mutableListOf()
+data class CommandType(
+    val sId: String,
+    val sItemId: String,
+    val sName: String,
+    val sParameters: MutableList<ParameterType> = mutableListOf()
 )
 
-data class Parametro(
-    val id: String,
-    val tipo: String,
-    val nome: String,
-    var valor: String
+data class ParameterType(
+    val sId: String,
+    val sType: String,
+    val sName: String,
+    var sValue: String
 )
 
-data class Procedimento(
-    val valor: String
+data class ProcedureType(
+    val sValue: String
 )
 
-data class Display(
-    val valor: String
+data class DisplayType(
+    val sValue: String
 )
 
-data class Observacao(
-    val valor: String
+data class NoteType(
+    val sValue: String
 )
 
-data class Registro(
+data class RegisterType(
     val codigo: String,
     var valor: String
 )

@@ -1,161 +1,160 @@
 package br.com.ic2tech.trustterm.model
 import org.xml.sax.Attributes
 import org.xml.sax.helpers.DefaultHandler
-import java.io.ByteArrayInputStream
 import java.io.File
 import javax.xml.parsers.SAXParserFactory
+import kotlin.time.Duration
 import kotlin.time.measureTime
 
 class ManagerXML {
-    companion object{
-        var certificacao: Certificacao? = null
-    }
 
     class XmlHandler : DefaultHandler() {
-        private var currentElement = ""
-        private var roteiro: Roteiro? = null
-        private var tabela: Tabela? = null
-        private var grupo: Grupo? = null
-        private var testCase: TestCase? = null
-        private var fluxo: Fluxo? = null
-        private var procedimento = Procedimento(valor = "")
-        private var display = Display(valor = "")
-        private var observacao = Observacao(valor = "")
-        private var registro = Registro(codigo = "", valor = "")
-        private var comando: Comando? = null
-        private var parametro: Parametro? = null
-        private var valorAtual = ""
+        private var tCertification: CertificationType? = null
+        private var sCurrElement = ""
+        private var tGuide: GuideType? = null
+        private var tTable: TableType? = null
+        private var tGroup: GroupType? = null
+        private var tTestCase: TestCaseType? = null
+        private var tFlow: FlowType? = null
+        private var tProcedure = ProcedureType(sValue = "")
+        private var tDisplay = DisplayType(sValue = "")
+        private var tNote = NoteType(sValue = "")
+        private var tRegister = RegisterType(codigo = "", valor = "")
+        private var tCommand: CommandType? = null
+        private var tParameter: ParameterType? = null
+        private var sCurrValue = ""
 
         override fun startElement(uri: String?, localName: String?, qName: String, attributes: Attributes) {
-            currentElement = qName
+            sCurrElement = qName
 
             when (qName) {
                 "certificacao" -> {
-                    certificacao = Certificacao(
-                        nome = attributes.getValue("nome") ?: "",
-                        id = attributes.getValue("Id") ?: "",
-                        solucao = attributes.getValue("solucao") ?: "",
-                        versaoSW = attributes.getValue("versaoSW") ?: "",
-                        ciclo = attributes.getValue("ciclo") ?: "",
-                        espec = attributes.getValue("espec") ?: "",
-                        usuario = attributes.getValue("usuario") ?: "",
-                        entidade = attributes.getValue("entidade") ?: "",
-                        statusExecucao = attributes.getValue("statusExecucao") ?: ""
+                    tCertification = CertificationType(
+                        sName = attributes.getValue("nome") ?: "",
+                        sId = attributes.getValue("Id") ?: "",
+                        sSolution = attributes.getValue("solucao") ?: "",
+                        sVersion = attributes.getValue("versaoSW") ?: "",
+                        sCicle = attributes.getValue("ciclo") ?: "",
+                        sSpec = attributes.getValue("espec") ?: "",
+                        sUser = attributes.getValue("usuario") ?: "",
+                        sEntity = attributes.getValue("entidade") ?: "",
+                        sStatus = attributes.getValue("statusExecucao") ?: ""
                     )
-                    certificacao?.roteiros = mutableListOf()
-                    certificacao?.tabelas = mutableListOf()
+                    tCertification?.atGuides = mutableListOf()
+                    tCertification?.atTables = mutableListOf()
                 }
 
                 "roteiro" -> {
-                    roteiro = Roteiro(
-                        id = attributes.getValue("Id") ?: "",
-                        nome = attributes.getValue("nome") ?: "",
-                        versao = attributes.getValue("versao") ?: ""
+                    tGuide = GuideType(
+                        sId = attributes.getValue("Id") ?: "",
+                        sName = attributes.getValue("nome") ?: "",
+                        sVersion = attributes.getValue("versao") ?: ""
                     )
                 }
 
                 "tabela" -> {
-                    tabela = Tabela(
-                        id = attributes.getValue("Id") ?: "",
-                        nome = attributes.getValue("nome") ?: "",
-                        acqIdx = attributes.getValue("acqIdx") ?: "",
-                        tabVer = attributes.getValue("tabVer") ?: "",
-                        versao = attributes.getValue("versao") ?: ""
+                    tTable = TableType(
+                        sId = attributes.getValue("Id") ?: "",
+                        sName = attributes.getValue("nome") ?: "",
+                        aAcqIdx = attributes.getValue("acqIdx") ?: "",
+                        sTableVersion = attributes.getValue("tabVer") ?: "",
+                        sVersion = attributes.getValue("versao") ?: ""
                     )
                 }
 
                 "grupo" -> {
-                    grupo = Grupo(
-                        id = attributes.getValue("Id") ?: "",
-                        nome = attributes.getValue("nome") ?: "",
-                        tabelaNome = attributes.getValue("tabelaNome") ?: "",
-                        tabelaVersao = attributes.getValue("tabelaVersao") ?: ""
+                    tGroup = GroupType(
+                        sId = attributes.getValue("Id") ?: "",
+                        sName = attributes.getValue("nome") ?: "",
+                        sTableName = attributes.getValue("tabelaNome") ?: "",
+                        sTableVersion = attributes.getValue("tabelaVersao") ?: ""
                     )
                 }
 
                 "testcase" -> {
-                    testCase = TestCase(
-                        id = attributes.getValue("Id") ?: "",
-                        nome = attributes.getValue("nome") ?: "",
-                        descricao = attributes.getValue("descricao") ?: "",
-                        versao = attributes.getValue("versao") ?: "",
-                        script = attributes.getValue("script") ?: ""
+                    tTestCase = TestCaseType(
+                        sId = attributes.getValue("Id") ?: "",
+                        sName = attributes.getValue("nome") ?: "",
+                        sDescription = attributes.getValue("descricao") ?: "",
+                        sVersion = attributes.getValue("versao") ?: "",
+                        sScript = attributes.getValue("script") ?: ""
                     )
                 }
 
                 "fluxo" -> {
-                    fluxo = Fluxo(
-                        id = attributes.getValue("Id") ?: "",
-                        itemId = attributes.getValue("itemId") ?: "",
-                        procedimento = Procedimento(valor = ""),
-                        display = Display(valor = ""),
-                        observacao = Observacao(valor = "")
+                    tFlow = FlowType(
+                        sId = attributes.getValue("Id") ?: "",
+                        sItemId = attributes.getValue("itemId") ?: "",
+                        sProcedure = ProcedureType(sValue = ""),
+                        sDisplay = DisplayType(sValue = ""),
+                        sNote = NoteType(sValue = "")
                     )
                 }
 
                 "comando" -> {
-                    comando = Comando(
-                        id = attributes.getValue("Id") ?: "",
-                        itemId = attributes.getValue("itemId") ?: "",
-                        nome = attributes.getValue("nome") ?: ""
+                    tCommand = CommandType(
+                        sId = attributes.getValue("Id") ?: "",
+                        sItemId = attributes.getValue("itemId") ?: "",
+                        sName = attributes.getValue("nome") ?: ""
                     )
                 }
 
                 "parametro" -> {
-                    parametro = Parametro(
-                        id = attributes.getValue("Id") ?: "",
-                        nome = attributes.getValue("nome") ?: "",
-                        tipo = attributes.getValue("tipo") ?: "",
-                        valor = ""
+                    tParameter = ParameterType(
+                        sId = attributes.getValue("Id") ?: "",
+                        sName = attributes.getValue("nome") ?: "",
+                        sType = attributes.getValue("tipo") ?: "",
+                        sValue = ""
                     )
-                    valorAtual = ""
+                    sCurrValue = ""
                 }
 
                 "procedimento" -> {
-                    procedimento = Procedimento(
-                        valor = ""
+                    tProcedure = ProcedureType(
+                        sValue = ""
                     )
-                    valorAtual = ""
+                    sCurrValue = ""
                 }
 
                 "display" -> {
-                    display = Display(
-                        valor = ""
+                    tDisplay = DisplayType(
+                        sValue = ""
                     )
-                    valorAtual = ""
+                    sCurrValue = ""
                 }
 
                 "observacao" -> {
-                    observacao = Observacao(
-                        valor = ""
+                    tNote = NoteType(
+                        sValue = ""
                     )
-                    valorAtual = ""
+                    sCurrValue = ""
                 }
 
                 "registro" -> {
-                    registro = Registro(
+                    tRegister = RegisterType(
                         codigo = attributes.getValue("codigo") ?: "",
                         valor = ""
                     )
-                    valorAtual = ""
+                    sCurrValue = ""
                 }
             }
         }
 
         override fun characters(ch: CharArray, start: Int, length: Int) {
-            valorAtual += String(ch, start, length).trim()
+            sCurrValue += String(ch, start, length).trim()
         }
 
         override fun endElement(uri: String?, localName: String?, qName: String) {
             when (qName) {
 
                 "certificacao" -> {
+                    tCertification?.let { CertificationClass.setCertificationData(it) }
 //                    println("certificacao: ${certificacao}")
                 }
 
                 "roteiro" -> {
-                    roteiro?.let {
-                        certificacao?.roteiros?.add(
+                    tGuide?.let {
+                        tCertification?.atGuides?.add(
                             it
                         )
                     }
@@ -163,8 +162,8 @@ class ManagerXML {
                 }
 
                 "tabela" -> {
-                    tabela?.let {
-                        certificacao?.tabelas?.add(
+                    tTable?.let {
+                        tCertification?.atTables?.add(
                             it
                         )
                     }
@@ -172,8 +171,8 @@ class ManagerXML {
                 }
 
                 "grupo" -> {
-                    grupo?.let {
-                        roteiro?.grupos?.add(
+                    tGroup?.let {
+                        tGuide?.atGroups?.add(
                             it
                         )
                     }
@@ -181,8 +180,8 @@ class ManagerXML {
                 }
 
                 "testcase" -> {
-                    testCase?.let {
-                        grupo?.testCases?.add(
+                    tTestCase?.let {
+                        tGroup?.atTestCases?.add(
                             it
                         )
                     }
@@ -190,8 +189,8 @@ class ManagerXML {
                 }
 
                 "fluxo" -> {
-                    fluxo?.let {
-                        testCase?.fluxos?.add(
+                    tFlow?.let {
+                        tTestCase?.atFlows?.add(
                             it
                         )
                     }
@@ -199,8 +198,8 @@ class ManagerXML {
                 }
 
                 "comando" -> {
-                    comando?.let {
-                        testCase?.comandos?.add(
+                    tCommand?.let {
+                        tTestCase?.atCommands?.add(
                             it
                         )
                     }
@@ -208,9 +207,9 @@ class ManagerXML {
                 }
 
                 "parametro" -> {
-                    parametro?.valor = valorAtual
-                    parametro?.let {
-                        comando?.parametros?.add(
+                    tParameter?.sValue = sCurrValue
+                    tParameter?.let {
+                        tCommand?.sParameters?.add(
                             it
                         )
                     }
@@ -218,21 +217,21 @@ class ManagerXML {
                 }
 
                 "procedimento" -> {
-                    fluxo?.procedimento = Procedimento(valor = valorAtual)
+                    tFlow?.sProcedure = ProcedureType(sValue = sCurrValue)
                 }
 
                 "display" -> {
-                    fluxo?.display = Display(valor = valorAtual)
+                    tFlow?.sDisplay = DisplayType(sValue = sCurrValue)
                 }
 
                 "observacao" -> {
-                    fluxo?.observacao = Observacao(valor = valorAtual)
+                    tFlow?.sNote = NoteType(sValue = sCurrValue)
                 }
 
                 "registro" -> {
-                    registro.valor = valorAtual
-                    registro.let {
-                        tabela?.registros?.add(
+                    tRegister.valor = sCurrValue
+                    tRegister.let {
+                        tTable?.atRegisters?.add(
                             it
                         )
                     }
@@ -243,44 +242,24 @@ class ManagerXML {
         }
     }
 
-    fun main() {
+    fun parseFileToCertification(sPathName: String) {
 
-        val factory = SAXParserFactory.newInstance()
-        val saxParser = factory.newSAXParser()
-        val handler = XmlHandler()
+        val tFactory = SAXParserFactory.newInstance()
+        val tSaxParser = tFactory.newSAXParser()
+        val tHandler = XmlHandler()
 
-        val file = File("C:/Projetos/workspace/TrustTerm/composeApp/assets/Cert_Full_V2.12.xml")
-        var totalTime = measureTime {
-            saxParser.parse(file, handler)
-        }
-        println("Total Time XML = ${totalTime.inWholeMilliseconds}")
+        val iTotalTime : Duration
 
-        totalTime = measureTime {
-            val iLenRoteiros = certificacao?.roteiros?.size ?: 0
-            for (iRoteiro in 0 until iLenRoteiros) {
-                println("iRoteiro[$iRoteiro] name = ${certificacao?.roteiros?.get(iRoteiro)?.nome}")
-                val iLenGrupos = certificacao?.roteiros?.get(iRoteiro)?.grupos?.size ?: 0
-                for (iGrupo in 0 until iLenGrupos) {
-                    println("\tiGrupo[$iGrupo] name = ${certificacao?.roteiros?.get(iRoteiro)?.grupos?.get(iGrupo)?.nome}")
-                    val iLenTestCases = certificacao?.roteiros?.get(iRoteiro)?.grupos?.get(iGrupo)?.testCases?.size ?: 0
-                    for (iTestCase in 0 until iLenTestCases) {
-                        println(
-                            "\t\tiTestCase[$iTestCase] name = ${
-                                certificacao?.roteiros?.get(iRoteiro)?.grupos?.get(
-                                    iGrupo
-                                )?.testCases?.get(iTestCase)?.nome
-                            }"
-                        )
-                    }
-                }
+        try {
+            val hFile = File(sPathName)
+            iTotalTime = measureTime {
+                tSaxParser.parse(hFile, tHandler)
             }
-
-            val iLenTabelas = certificacao?.tabelas?.size ?: 0
-            for (iTabela in 0 until iLenTabelas){
-                println("iTabela[$iTabela] name = ${certificacao?.roteiros?.get(iTabela)?.nome}")
-            }
+            println("Total Time XML = ${iTotalTime.inWholeMilliseconds}")
+        }catch (e: Exception){
+            e.printStackTrace()
+            return
         }
-        println("Total Time Organize = ${totalTime.inWholeMilliseconds}")
 
     }
 }

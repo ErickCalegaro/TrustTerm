@@ -12,36 +12,36 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.com.ic2tech.trustterm.controller.BookController
-import br.com.ic2tech.trustterm.model.Book
+import br.com.ic2tech.trustterm.controller.GuideController
+import br.com.ic2tech.trustterm.model.GuideType
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun BookListScreen(controller: BookController) {
-    var books by remember { mutableStateOf(emptyList<Book>()) }
+fun GuideListScreen(controller: GuideController) {
+    var guides by remember { mutableStateOf(emptyList<GuideType>()) }
 
     LaunchedEffect(Unit) {
-        books = controller.fetchBooks()
+        guides = controller.fetchGuides()
     }
 
     Column(Modifier.fillMaxSize().padding(16.dp)) {
-        Text("Books", style = MaterialTheme.typography.h4)
+        Text("Roteiros", style = MaterialTheme.typography.h4)
 
         LazyColumn {
-            items(books) { book ->
-                BookItem(book)
+            items(guides) { guide ->
+                GuideItem(guide)
             }
         }
     }
 }
 
 @Composable
-fun BookItem(book: Book) {
+fun GuideItem(guide: GuideType) {
     Card(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
         Column(Modifier.padding(16.dp)) {
-            Text(book.title, style = MaterialTheme.typography.body1)
-            Text("by ${book.author}", style = MaterialTheme.typography.body2)
+            Text(guide.sName, style = MaterialTheme.typography.body1)
+            Text("by ${guide.sId}", style = MaterialTheme.typography.body2)
         }
     }
 }
