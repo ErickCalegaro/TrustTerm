@@ -16,6 +16,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation("androidx.compose.material:material-icons-extended:1.7.8")
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -26,10 +27,8 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
         }
-
     }
 }
-
 compose.desktop {
     application {
         mainClass = "br.com.ic2tech.trustterm.MainKt"
