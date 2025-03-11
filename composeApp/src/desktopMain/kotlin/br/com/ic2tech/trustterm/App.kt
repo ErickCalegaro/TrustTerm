@@ -5,7 +5,6 @@ import br.com.ic2tech.trustterm.controller.GuideController
 import br.com.ic2tech.trustterm.model.CertificationClass
 import br.com.ic2tech.trustterm.model.ManagerXML
 import br.com.ic2tech.trustterm.view.GuideListScreen
-import br.com.ic2tech.trustterm.view.MyDrawerApp
 import kotlin.time.measureTime
 
 @Composable
@@ -43,10 +42,7 @@ fun App() {
     }
     println("Total Time Organize = ${totalTime.inWholeMilliseconds}")
 
-//    val controller = GuideController()
-//    GuideListScreen(controller)
-
-    MyDrawerApp()
-
+    val controller = GuideController()
+    GuideListScreen(controller)
 
 }

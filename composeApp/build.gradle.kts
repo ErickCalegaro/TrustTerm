@@ -16,7 +16,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
-            implementation("androidx.compose.material:material-icons-extended:1.7.8")
+            implementation(libs.androidx.material.icons.extended)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)

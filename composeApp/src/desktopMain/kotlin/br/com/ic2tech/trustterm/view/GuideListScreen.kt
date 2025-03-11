@@ -41,7 +41,7 @@ fun GuideItem(guide: GuideType) {
     Card(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
         Column(Modifier.padding(16.dp)) {
             Text(guide.sName, style = MaterialTheme.typography.body1)
-            Text("by ${guide.sId}", style = MaterialTheme.typography.body2)
+            Text("id ${guide.sId}", style = MaterialTheme.typography.body2)
         }
     }
 }
