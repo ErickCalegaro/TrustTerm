@@ -1,14 +1,14 @@
 package br.com.ic2tech.trustterm
 
+import br.com.ic2tech.trustterm.view.MainScreen
 import androidx.compose.runtime.*
-import br.com.ic2tech.trustterm.controller.GuideController
 import br.com.ic2tech.trustterm.model.CertificationClass
 import br.com.ic2tech.trustterm.model.ManagerXML
-import br.com.ic2tech.trustterm.view.GuideListScreen
 import kotlin.time.measureTime
 
 @Composable
 fun App() {
+/*
     try {
         val tXML = ManagerXML()
         tXML.parseFileToCertification("C:/Projetos/workspace/TrustTerm/composeApp/assets/Cert_Full_V2.12.xml")
@@ -41,8 +41,11 @@ fun App() {
         }
     }
     println("Total Time Organize = ${totalTime.inWholeMilliseconds}")
+*/
+    val mainScreen = MainScreen()
+    mainScreen.MainScreen()
 
-    val controller = GuideController()
-    GuideListScreen(controller)
+//    val controller = GuideController()
+//    GuideListScreen(controller)
 
 }

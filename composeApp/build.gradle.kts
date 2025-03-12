@@ -15,8 +15,9 @@ kotlin {
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(libs.androidx.material.icons.extended)
+            implementation(compose.material)
+            implementation(libs.compose.material.icons.core)
+            implementation(libs.compose.material.icons.extended)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -29,6 +30,7 @@ kotlin {
         }
     }
 }
+
 compose.desktop {
     application {
         mainClass = "br.com.ic2tech.trustterm.MainKt"
