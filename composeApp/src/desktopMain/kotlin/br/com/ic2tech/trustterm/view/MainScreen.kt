@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.outlined.*
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -313,9 +312,21 @@ class MainScreen {
             modifier = Modifier
                 .fillMaxHeight()
                 .requiredWidth(300.dp)
-                .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
+            IconButton(onClick = onItemClick,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 5.dp, top = 5.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Fechar",
+                    tint = Color(PANTONE_OFFWHITE),
+                    modifier = Modifier
+                        .size(25.dp)
+                )
+            }
             Image(
                 painter = painterResource(Res.drawable.trust_term_light),
                 contentDescription = "Logotipo",
@@ -323,9 +334,9 @@ class MainScreen {
                     .size(200.dp)
                     .align(Alignment.CenterHorizontally)
             )
-            Spacer(modifier = Modifier.size(30.dp))
+            Spacer(modifier = Modifier.size(50.dp))
             Divider(color = Color(PANTONE_OFFWHITE))
-            DrawerItem("Inicio", Icons.Outlined.Home, onItemClick)
+            DrawerItem("Inicio", Res.drawable.home, onItemClick)
 
             ExpandableMenu(title = "Certificações", resource = Res.drawable.article) {
                 DrawerItem("Executar", Res.drawable.play_circle, onItemClick)
@@ -346,7 +357,7 @@ class MainScreen {
                 DrawerItem("Mensagens Notify", Res.drawable.mark_unread_chat_alt, onItemClick)
             }
 
-            DrawerItem("Configurações", Icons.Outlined.Settings, onItemClick)
+            DrawerItem("Configurações", Res.drawable.settings, onItemClick)
             DrawerItem("Chaves", Res.drawable.vpn_key, onItemClick)
 
             ExpandableMenu(title = "Ferramentas", resource = Res.drawable.construction) {
@@ -357,24 +368,6 @@ class MainScreen {
             }
 
             DrawerItem("Sair", Res.drawable.logout, onItemClick)
-        }
-    }
-
-    @Composable
-    fun DrawerItem(text: String, icon: ImageVector, onClick: () -> Unit) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(onClick = onClick)
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(icon,
-                contentDescription = text,
-                modifier = Modifier.padding(end = 16.dp),
-                tint = Color(PANTONE_OFFWHITE)
-            )
-            Text(text, color = Color(PANTONE_OFFWHITE))
         }
     }
 
@@ -393,39 +386,15 @@ class MainScreen {
                 modifier = Modifier.padding(end = 16.dp),
                 colorFilter = ColorFilter.tint(Color(PANTONE_OFFWHITE))
             )
-            Text(text, color = Color(PANTONE_OFFWHITE))
-        }
-    }
-
-    @Composable
-    fun ExpandableMenu(title: String, icon: ImageVector, content: @Composable ColumnScope.() -> Unit) {
-        var expanded by remember { mutableStateOf(false) }
-        Column {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { expanded = !expanded }
-                    .padding(12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(icon,
-                    contentDescription = title,
-                    modifier = Modifier.padding(end = 16.dp),
-                    tint = Color(PANTONE_OFFWHITE)
+            Text(
+                text = text,
+                color = Color(PANTONE_OFFWHITE),
+                style = TextStyle(
+                    fontFamily = FontFamily(Font(resource = Res.font.OpenSans)),
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp
                 )
-                Text(title, color = Color(PANTONE_OFFWHITE))
-                Spacer(Modifier.weight(1f))
-                Icon(
-                    imageVector = if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
-                    contentDescription = "Expandir",
-                    tint = Color(PANTONE_OFFWHITE)
-                )
-            }
-            if (expanded) {
-                Column(modifier = Modifier.padding(start = 24.dp)) {
-                    content()
-                }
-            }
+            )
         }
     }
 
@@ -446,7 +415,15 @@ class MainScreen {
                     modifier = Modifier.padding(end = 16.dp),
                     colorFilter = ColorFilter.tint(Color(PANTONE_OFFWHITE))
                 )
-                Text(title, color = Color(PANTONE_OFFWHITE))
+                Text(
+                    text = title,
+                    color = Color(PANTONE_OFFWHITE),
+                    style = TextStyle(
+                        fontFamily = FontFamily(Font(resource = Res.font.OpenSans)),
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp
+                    )
+                )
                 Spacer(Modifier.weight(1f))
                 Icon(
                     imageVector = if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
