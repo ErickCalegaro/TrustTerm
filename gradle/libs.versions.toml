@@ -10,6 +10,7 @@ compose-material = "1.4.3"
 foundation-android = "1.7.8"
 ui-text-android = "1.7.8"
 foundation-android-version = "1.7.8"
+androidx-navigation = "2.7.0-alpha06"
 #ui-android = "1.7.8"
 
 [libraries]
@@ -25,6 +26,7 @@ compose-material-icons-core = { group = "androidx.compose.material", name = "mat
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-material" }
 androidx-ui-text-android = { group = "androidx.compose.ui", name = "ui-text-android", version.ref = "ui-text-android" }
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundation-android-version" }
+androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
 #androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "ui-tooling-preview-android" }
 #androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-multiplatform" }
 #androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundation-android" }

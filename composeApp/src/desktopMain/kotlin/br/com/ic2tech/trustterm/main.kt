@@ -8,7 +8,7 @@ import androidx.compose.ui.window.rememberWindowState
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        state = rememberWindowState(WindowPlacement.Maximized),
+//        state = rememberWindowState(WindowPlacement.Maximized),
         title = "TrustTerm by IC2Tech",
     ) {
         App()

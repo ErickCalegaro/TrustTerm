@@ -4,6 +4,10 @@ import br.com.ic2tech.trustterm.view.MainScreen
 import androidx.compose.runtime.*
 import br.com.ic2tech.trustterm.model.CertificationClass
 import br.com.ic2tech.trustterm.model.ManagerXML
+import br.com.ic2tech.trustterm.view.TestScreen
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.time.measureTime
 
 @Composable
@@ -42,8 +46,11 @@ fun App() {
     }
     println("Total Time Organize = ${totalTime.inWholeMilliseconds}")
 */
-    val mainScreen = MainScreen()
-    mainScreen.MainScreen()
+
+    MainScreen()
+
+//    val testScreen = TestScreen()
+//    testScreen.TestScreen()
 
 //    val controller = GuideController()
 //    GuideListScreen(controller)
